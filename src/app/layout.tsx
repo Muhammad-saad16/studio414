@@ -1,26 +1,37 @@
 import type { Metadata } from "next";
-import { Syne, Manrope } from "next/font/google";
+import { Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import { site } from "@/lib/site";
 import SmoothScroll from "@/components/SmoothScroll";
 import Cursor from "@/components/Cursor";
+import Preloader from "@/components/Preloader";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
-const display = Syne({ variable: "--font-display", subsets: ["latin"], weight: ["500", "600", "700", "800"] });
-const body = Manrope({ variable: "--font-body", subsets: ["latin"] });
+const serif = Instrument_Serif({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+});
+const body = Inter({ variable: "--font-body", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: `${site.name} — Creative & Growth Agency`,
+  title: { default: `${site.name} — ${site.tagline}`, template: `%s — ${site.name}` },
   description:
-    "Graphic design, branding, digital marketing, SEO, social media and web development that grows your business.",
+    "Sarté is a creative advertising company that builds brands, content, and digital products for businesses in the US and UK.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} antialiased`}>
+    <html lang="en" className={`${serif.variable} ${body.variable} antialiased`}>
       <body className="grain min-h-screen">
         <SmoothScroll />
         <Cursor />
-        {children}
+        <Preloader />
+        <Navbar />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

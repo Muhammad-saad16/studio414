@@ -1,116 +1,194 @@
 // ---------------------------------------------------------------
-//  ALL SITE CONTENT LIVES HERE.
-//  Copy is taken from the Sarté Brand Guide (Notion).
-//  Anything marked  TODO  is a placeholder the Sarté team will write.
-//  Logo: drop it at /public/logo.svg and set `logo: "/logo.svg"`.
+//  Brand config — change the name, email, phone, socials here and
+//  the whole site updates. Drop the logo at /public/logo.svg and
+//  set `logo` below to "/logo.svg".
 // ---------------------------------------------------------------
 export const site = {
   name: "Sarté",
-  logo: null as string | null,
-  tagline: "Where ideas are born, and brands are made",
+  logo: null as string | null, // e.g. "/logo.svg"
+  tagline: "Design. Marketing. Growth.",
   year: 2026,
-  email: "hello@sarte.studio", // TODO real email
-  phone: "", // TODO add phone if wanted
-  markets: "United States & United Kingdom",
+  email: "hello@sarte.studio",
+  phone: "+92 300 0000000",
+  address: "Karachi, Pakistan — working worldwide",
   socials: {
-    instagram: "#", // TODO
-    linkedin: "#", // TODO
-  } as Record<string, string>,
+    instagram: "#",
+    linkedin: "#",
+    behance: "#",
+    x: "#",
+  },
 };
 
 export const nav = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Work", href: "/work" },
-  { label: "Contact", href: "/contact" },
+  { label: "Services", href: "#services" },
+  { label: "Work", href: "#work" },
+  { label: "Process", href: "#process" },
+  { label: "About", href: "#about" },
+  { label: "FAQ", href: "#faq" },
 ];
 
-export const brand = {
-  whatWeAre:
-    "A creative advertising company that builds brands, content, and digital products for businesses.",
-  nameMeaning:
-    "Sarté stands for an idea. Every piece of creative work begins with one, and everything we make starts there.",
-  mission: "To help ambitious brands flourish through ideas that are imaginatively crafted and strategically built.",
-  vision: "To be the partner every visionary brand turns to when an idea deserves to be seen by the world.",
-  clients: "Business owners, founders, startup owners, and big tech firms.",
-  // TODO: link/paste the "Sarté Brand Story" here
-  story: "",
-};
-
-export const values = [
+export const services = [
   {
-    title: "Idea first",
-    desc: "Every great outcome begins with a great idea. We think before we design, and we imagine before we execute.",
+    no: "01",
+    title: "Graphic Design",
+    desc: "Scroll-stopping visuals for print, social and digital — posters, packaging, decks and everything in between.",
+    tags: ["Social creatives", "Packaging", "Print", "Pitch decks"],
+    color: "#8c52ff",
   },
   {
-    title: "Ownership",
-    desc: "We built Sarté with our own hands, and we treat every project the same way. We take responsibility for the work, the results, and the promise we make to clients.",
+    no: "02",
+    title: "Brand Identity",
+    desc: "Logos, type, colour and voice that make you instantly recognisable — and impossible to forget.",
+    tags: ["Logo design", "Brand guidelines", "Naming", "Rebrands"],
+    color: "#5b5bf5",
   },
   {
-    title: "Craft",
-    desc: "Excellence lives in the details. We refine relentlessly, because ordinary work is never our standard.",
+    no: "03",
+    title: "Digital Marketing",
+    desc: "Performance campaigns on Meta, Google and TikTok engineered for one thing: measurable revenue.",
+    tags: ["Meta Ads", "Google Ads", "TikTok Ads", "Funnels"],
+    color: "#b48cff",
   },
   {
-    title: "Integrity",
-    desc: "We are honest in our advice, transparent in our process, and dependable in our delivery. Trust is the foundation of every long-term partnership.",
+    no: "04",
+    title: "SEO",
+    desc: "Technical, on-page and content SEO that pushes you to page one — and keeps you there.",
+    tags: ["Technical SEO", "Local SEO", "Content", "Link building"],
+    color: "#7b2fbe",
   },
   {
-    title: "Boldness",
-    desc: "We back original thinking and push past the predictable. We believe brands are remembered for the risks they dare to take with clarity and purpose.",
-  },
-];
-
-export type Service = {
-  slug: string;
-  title: string;
-  items: string[];
-  desc?: string;
-};
-
-export const services: Service[] = [
-  {
-    slug: "creative-design",
-    title: "Creative & Design",
-    items: ["Ad creatives", "Static posts and graphic design", "Brand identity and visual design"],
+    no: "05",
+    title: "Social Media",
+    desc: "Content calendars, reels and community management that turn followers into customers.",
+    tags: ["Strategy", "Reels", "Community", "Influencers"],
+    color: "#8b8bff",
   },
   {
-    slug: "video-motion",
-    title: "Video & Motion",
-    items: ["Reels and short-form video", "Motion graphics", "Launch videos and explainer videos", "Video editing"],
-  },
-  {
-    slug: "digital-software",
-    title: "Digital & Software",
-    items: ["Websites", "Applications and software solutions", "Backroom software"],
-  },
-  {
-    slug: "ai-automation",
-    title: "AI Automation",
-    desc: "We automate your current systems, from lead follow-ups and customer support to reporting and workflows, so your team gets up to 75% more productivity and a more balanced, better-managed operation.",
-    items: ["Lead follow-ups", "Customer support", "Reporting", "Workflows"],
-  },
-  {
-    slug: "marketing",
-    title: "Marketing",
-    items: ["Paid advertising (Meta Ads and other platforms)", "Brand visibility and growth"],
-  },
-  {
-    slug: "ebook-publishing",
-    title: "E-Book & Publishing",
-    items: [
-      "Book cover design, illustration, and comic book artwork",
-      "Writing, ghostwriting, editing, and proofreading",
-      "Book publishing, formatting, and children's book printing",
-      "Author website design, book trailers, and marketing",
-      "Professional book reviews",
-    ],
+    no: "06",
+    title: "Web Design & Dev",
+    desc: "Fast, animated, conversion-focused websites and stores built on modern tech.",
+    tags: ["UI/UX", "Next.js", "Shopify", "WordPress"],
+    color: "#9b59b6",
   },
 ];
 
-export const customWork = "Other work as per the client's needs.";
+export const work = [
+  {
+    title: "Bloom Organics",
+    cat: "Branding · Packaging",
+    result: "+212% retail sell-through",
+    from: "#7b2fbe",
+    to: "#7b2fbe",
+  },
+  {
+    title: "Vertex Fintech",
+    cat: "Web · SEO",
+    result: "#1 for 140+ keywords",
+    from: "#5b5bf5",
+    to: "#5b5bf5",
+  },
+  {
+    title: "Urban Thread",
+    cat: "Performance Marketing",
+    result: "6.4x ROAS in 90 days",
+    from: "#2a1747",
+    to: "#2a1747",
+  },
+  {
+    title: "Saffron House",
+    cat: "Social · Content",
+    result: "2.1M organic reach / mo",
+    from: "#8c52ff",
+    to: "#8c52ff",
+  },
+];
 
-export const processSteps = ["Brief", "Concept", "Draft", "Review", "Revision", "Delivery"];
+export const process = [
+  {
+    step: "01",
+    title: "Discover",
+    desc: "We dig into your business, audience and competitors to find the angle nobody else is using.",
+  },
+  {
+    step: "02",
+    title: "Strategise",
+    desc: "A clear roadmap — positioning, channels, KPIs and budget — so every rupee has a job.",
+  },
+  {
+    step: "03",
+    title: "Create",
+    desc: "Designers, writers and developers bring it to life with craft you can feel.",
+  },
+  {
+    step: "04",
+    title: "Launch & Grow",
+    desc: "We ship, measure, test and optimise — every week, with reports in plain language.",
+  },
+];
 
-// TODO: the Sarté team will add real case studies here.
-export const work: { title: string; category: string; image?: string }[] = [];
+export const stats = [
+  { value: 250, suffix: "+", label: "Projects delivered" },
+  { value: 98, suffix: "%", label: "Client retention" },
+  { value: 6, suffix: "x", label: "Average ROAS" },
+  { value: 12, suffix: "M+", label: "Organic impressions" },
+];
+
+export const testimonials = [
+  {
+    quote: "They rebuilt our brand from scratch and sales doubled in the first quarter. Feels like an in-house team.",
+    name: "Ayesha Khan",
+    role: "Founder, Bloom Organics",
+  },
+  {
+    quote: "Page one for every keyword that matters to us. Our inbound leads went from trickle to flood.",
+    name: "Hamza Raza",
+    role: "CMO, Vertex Fintech",
+  },
+  {
+    quote: "Best ad agency we've worked with. Transparent reporting and ROAS we didn't think was possible.",
+    name: "Daniel Brooks",
+    role: "Owner, Urban Thread",
+  },
+  {
+    quote: "Our socials finally look premium. Engagement is up 4x and customers mention our posts in-store.",
+    name: "Sara Malik",
+    role: "Director, Saffron House",
+  },
+  {
+    quote: "Fast, creative and genuinely obsessed with results. The website they built converts like crazy.",
+    name: "Omar Siddiqui",
+    role: "CEO, Kinetic Labs",
+  },
+  {
+    quote: "From logo to launch campaign in 5 weeks. Everything looked and felt world-class.",
+    name: "Zara Ahmed",
+    role: "Co-founder, Lumen Skin",
+  },
+];
+
+export const faqs = [
+  {
+    q: "What services do you offer?",
+    a: "Graphic design, brand identity, digital marketing (Meta, Google, TikTok), SEO, social media management and website design & development — individually or as a full growth package.",
+  },
+  {
+    q: "How much does a project cost?",
+    a: "It depends on scope. We offer fixed-price projects for branding and websites, and monthly retainers for marketing, SEO and social. Book a free call and we'll send a clear proposal within 48 hours.",
+  },
+  {
+    q: "How long until I see results?",
+    a: "Design and web projects typically ship in 2–6 weeks. Paid ads start producing data in days; SEO usually shows strong movement within 3–6 months.",
+  },
+  {
+    q: "Do you work with clients outside Pakistan?",
+    a: "Yes — we work with brands across the UK, US, UAE and beyond, fully remote with weekly calls and live dashboards.",
+  },
+  {
+    q: "Will I own the final files?",
+    a: "Always. Once the project is paid, every source file, asset and account is 100% yours.",
+  },
+];
+
+export const clients = [
+  "Bloom", "Vertex", "Urban Thread", "Saffron", "Kinetic", "Lumen", "Northwind", "Orbit", "Pulse", "Arcadia",
+];

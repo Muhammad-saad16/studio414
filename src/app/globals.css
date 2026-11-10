@@ -1,30 +1,59 @@
 @import "tailwindcss";
 
 :root {
-  --cream: #f2ede4;
-  --cream-2: #e9e2d6;
-  --ink: #121212;
-  --ink-2: #1c1b19;
-  --ember: #ff4d1f;
-  --muted: #8a847a;
-  --line: rgba(18, 18, 18, 0.12);
+  --bg: #000000;
+  --bg-2: #0a0a0c;
+  --fg: #f7f4fb;
+  --muted: #8f8a9b;
+  --line: rgba(255, 255, 255, 0.06);
+  --accent: #8c52ff;
+  --accent-2: #5b5bf5;
+  --accent-3: #b48cff;
+  --accent-ink: #b48cff; /* accent used as TEXT colour */
+}
+
+/* ---------- light theme ---------- */
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --bg-2: #f6f3fb;
+  --fg: #0a0a0c;
+  --muted: #6b6676;
+  --line: rgba(0, 0, 0, 0.07);
+  --accent-ink: #7b2fbe;
 }
 
 @theme inline {
-  --color-cream: var(--cream);
-  --color-cream-2: var(--cream-2);
-  --color-ink: var(--ink);
-  --color-ink-2: var(--ink-2);
-  --color-ember: var(--ember);
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-fg: var(--fg);
   --color-muted: var(--muted);
   --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-3: var(--accent-3);
   --font-sans: var(--font-body);
-  --font-serif: var(--font-serif);
+  --font-display: var(--font-display);
 }
 
 html {
-  background: var(--cream);
+  background: var(--bg);
+  color-scheme: dark;
+}
+html[data-theme="light"] {
   color-scheme: light;
+}
+/* smooth colour change when toggling theme */
+html.theme-anim,
+html.theme-anim * {
+  transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease !important;
+}
+
+/* accent as text: lighter purple on black, deeper purple on white */
+.text-accent {
+  color: var(--accent-ink);
+}
+:root[data-theme="light"] .text-accent {
+  color: var(--accent-ink);
 }
 
 html.lenis,
@@ -36,15 +65,15 @@ html.lenis body {
 }
 
 body {
-  background: var(--cream);
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--fg);
   font-family: var(--font-body), system-ui, sans-serif;
   overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--ember);
-  color: var(--cream);
+  background: var(--accent);
+  color: #fff;
 }
 
 @media (pointer: fine) {
@@ -55,11 +84,29 @@ body {
   }
 }
 
-.font-serif {
-  font-family: var(--font-serif), Georgia, serif;
-  font-weight: 400;
-  letter-spacing: -0.02em;
+.font-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+  letter-spacing: -0.035em;
 }
+
+/* solid highlight (no gradients) */
+.text-gradient {
+  color: var(--accent-ink);
+}
+.hl-block {
+  color: #ffffff;
+  background: var(--accent);
+  padding: 0 0.12em;
+  border-radius: 0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.text-outline {
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--fg) 40%, transparent);
+  color: transparent;
+}
+
 
 .grain::after {
   content: "";
@@ -67,7 +114,7 @@ body {
   inset: -50%;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.06;
+  opacity: 0.05;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: grain 8s steps(10) infinite;
 }
@@ -80,11 +127,26 @@ body {
   80% { transform: translate(3%, 4%); }
 }
 
+.grid-bg {
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
+}
+
 @keyframes marquee {
   to { transform: translateX(-50%); }
 }
 .animate-marquee {
   animation: marquee var(--speed, 30s) linear infinite;
+}
+.animate-marquee-reverse {
+  animation: marquee var(--speed, 30s) linear infinite reverse;
+}
+.pause-hover:hover .animate-marquee,
+.pause-hover:hover .animate-marquee-reverse {
+  animation-play-state: paused;
 }
 
 @keyframes spin-slow {

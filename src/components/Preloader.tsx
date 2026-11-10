@@ -2,9 +2,15 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { site } from "@/lib/site";
-import { consumeFirstLoad, ease } from "./ui";
+import { ease } from "./ui";
 
-const flash = ["Idea", "Craft", "Create", "Brand", "Grow"];
+const flash = [
+  { t: "Design", c: "text-fg" },
+  { t: "Brand", c: "hl-block" },
+  { t: "Market", c: "text-accent" },
+  { t: "Rank", c: "text-fg" },
+  { t: "Grow", c: "text-accent-2" },
+];
 const STEP = 260; // ms per word
 
 export default function Preloader() {
@@ -16,7 +22,7 @@ export default function Preloader() {
     document.documentElement.style.overflow = "hidden";
     const timers: ReturnType<typeof setTimeout>[] = [];
     for (let k = 1; k <= flash.length; k++) timers.push(setTimeout(() => setI(k), 300 + k * STEP));
-    timers.push(setTimeout(() => setExit(true), 300 + flash.length * STEP + 850));
+    timers.push(setTimeout(() => setExit(true), 300 + flash.length * STEP + 900));
     return () => {
       timers.forEach(clearTimeout);
       document.documentElement.style.overflow = "";
@@ -35,20 +41,17 @@ export default function Preloader() {
       onAnimationComplete={() => {
         if (exit) {
           document.documentElement.style.overflow = "";
-          consumeFirstLoad();
           setDone(true);
         }
       }}
     >
-      <div className="relative flex h-full items-center justify-center overflow-hidden bg-ink text-cream">
-        <div className="absolute left-6 top-6 text-[11px] uppercase tracking-[0.3em] text-cream/40 md:left-10 md:top-10">
-          {site.tagline}
-        </div>
+      <div className="relative flex h-full items-center justify-center overflow-hidden bg-bg">
+        {/* counter dots */}
         <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 gap-2">
           {[...flash, null].map((_, k) => (
             <span
               key={k}
-              className={`h-1 rounded-full transition-all duration-300 ${k <= i ? "w-6 bg-ember" : "w-1 bg-cream/20"}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${k <= i ? "w-6 bg-accent" : "w-1.5 bg-fg/20"}`}
             />
           ))}
         </div>
@@ -56,27 +59,27 @@ export default function Preloader() {
         {!isFinal ? (
           <motion.span
             key={i}
-            className={`font-serif text-[22vw] leading-none md:text-[13vw] ${i % 2 ? "italic text-ember" : ""}`}
-            initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            className={`font-display text-[18vw] leading-none font-semibold tracking-tight md:text-[11vw] ${flash[i].c}`}
+            initial={{ opacity: 0, scale: 0.85, filter: "blur(12px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
           >
-            {flash[i]}
-            <span className="text-ember not-italic">.</span>
+            {flash[i].t}
+            <span className="text-fg">.</span>
           </motion.span>
         ) : (
           <motion.div
-            className="font-serif flex overflow-hidden text-[26vw] leading-[1.05] md:text-[16vw]"
-            animate={exit ? { scale: 0.92, opacity: 0.3 } : {}}
+            className="font-display flex overflow-hidden text-[20vw] leading-[1.05] font-semibold tracking-tighter md:text-[13vw]"
+            animate={exit ? { scale: 0.9, opacity: 0.4 } : {}}
             transition={{ duration: 0.9, ease }}
           >
             {(site.name + ".").split("").map((ch, k, arr) => (
               <motion.span
                 key={k}
-                className={`inline-block ${k === arr.length - 1 ? "text-ember" : ""}`}
+                className={`inline-block ${k === arr.length - 1 ? "text-accent" : "text-fg"}`}
                 initial={{ y: "100%" }}
                 animate={{ y: "0%" }}
-                transition={{ duration: 0.8, ease, delay: k * 0.05 }}
+                transition={{ duration: 0.7, ease, delay: k * 0.04 }}
               >
                 {ch}
               </motion.span>
@@ -84,8 +87,9 @@ export default function Preloader() {
           </motion.div>
         )}
       </div>
+      {/* curved bottom edge while sliding away */}
       <motion.div
-        className="absolute left-[-10%] top-full h-[18vh] w-[120%] rounded-b-[50%] bg-ink"
+        className="absolute left-[-10%] top-full h-[18vh] w-[120%] rounded-b-[50%] bg-bg"
         initial={{ scaleY: 0 }}
         animate={exit ? { scaleY: 1 } : {}}
         style={{ originY: 0 }}

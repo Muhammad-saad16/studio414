@@ -157,6 +157,15 @@ body {
   animation: spin-slow 18s linear infinite;
 }
 
+@keyframes blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(8%, -10%) scale(1.15); }
+  66% { transform: translate(-8%, 8%) scale(0.9); }
+}
+.animate-blob {
+  animation: blob 16s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
-import { ArrowUpRight, Sparkles } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Sparkles } from "lucide-react";
 import { Button, ease } from "./ui";
 
 const words = ["brands", "growth", "rankings", "stories", "revenue"];
@@ -42,30 +42,14 @@ export default function Hero() {
     >
       {/* background */}
       <div className="grid-bg pointer-events-none absolute inset-0" />
-      {/* solid floating shapes — shades of one colour */}
-      <motion.div style={{ x: bx, y: by }} className="pointer-events-none absolute right-[7%] top-[22%] hidden md:block">
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: d + 0.4, type: "spring", stiffness: 120, damping: 12 }}
-          className="h-32 w-32 rounded-full bg-accent lg:h-40 lg:w-40"
-        />
+      <motion.div style={{ x: bx, y: by }} className="pointer-events-none absolute -left-[10%] top-[10%] h-[45vw] w-[45vw]">
+        <div className="animate-blob h-full w-full rounded-full bg-accent-2/40 blur-[120px]" />
       </motion.div>
-      <motion.div style={{ x: bx2, y: by2 }} className="pointer-events-none absolute right-[23%] top-[15%] hidden md:block">
-        <motion.div
-          initial={{ scale: 0, rotate: -45 }}
-          animate={{ scale: 1, rotate: 315 }}
-          transition={{ scale: { delay: d + 0.55, type: "spring", stiffness: 120, damping: 12 }, rotate: { delay: d + 0.55, duration: 30, repeat: Infinity, ease: "linear" } }}
-          className="h-16 w-16 rounded-2xl bg-accent-2 lg:h-20 lg:w-20"
-        />
+      <motion.div style={{ x: bx2, y: by2 }} className="pointer-events-none absolute -right-[10%] bottom-[0%] h-[40vw] w-[40vw]">
+        <div className="animate-blob h-full w-full rounded-full bg-accent/25 blur-[120px] [animation-delay:-6s]" />
       </motion.div>
-      <motion.div style={{ x: bx2, y: by }} className="pointer-events-none absolute bottom-[28%] right-[5%] hidden md:block">
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1, y: [0, -14, 0] }}
-          transition={{ scale: { delay: d + 0.7, type: "spring", stiffness: 120, damping: 12 }, y: { delay: d + 1, duration: 3, repeat: Infinity, ease: "easeInOut" } }}
-          className="h-10 w-10 rounded-full bg-accent-3"
-        />
+      <motion.div style={{ x: bx2, y: by }} className="pointer-events-none absolute right-[25%] top-[5%] h-[25vw] w-[25vw]">
+        <div className="animate-blob h-full w-full rounded-full bg-accent-3/25 blur-[100px] [animation-delay:-10s]" />
       </motion.div>
 
       <motion.div style={{ y, opacity, scale }} className="relative mx-auto w-full max-w-7xl px-5 md:px-8">
@@ -82,7 +66,7 @@ export default function Hero() {
           Now booking projects for 2027
         </motion.div>
 
-        <h1 className="font-display text-[11vw] leading-[0.98] font-semibold md:text-[6.5vw] xl:text-[6.25rem]">
+        <h1 className="font-display text-[13vw] leading-[0.92] font-bold tracking-tight md:text-[8.5vw] xl:text-[8rem]">
           {["We craft", "bold"].map((line, li) => (
             <span key={li} className="block overflow-hidden">
               <motion.span
@@ -98,7 +82,7 @@ export default function Hero() {
                   <AnimatePresence mode="popLayout">
                     <motion.span
                       key={words[i]}
-                      className="inline-block text-accent"
+                      className="text-gradient inline-block italic"
                       initial={{ y: "100%", opacity: 0 }}
                       animate={{ y: "0%", opacity: 1 }}
                       exit={{ y: "-100%", opacity: 0 }}
@@ -135,7 +119,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: d + 0.5, duration: 0.9, ease }}
-            className="max-w-xl text-base leading-relaxed text-fg/65 md:text-lg"
+            className="max-w-xl text-lg leading-relaxed text-fg/70"
           >
             A full-service creative & growth agency. Graphic design, branding, performance marketing and SEO —
             under one roof, obsessed with one metric: <span className="text-fg">your growth.</span>
@@ -155,6 +139,26 @@ export default function Hero() {
           </motion.div>
         </div>
 
+        <motion.a
+          href="#about"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: d + 1 }}
+          className="absolute -top-6 right-8 hidden h-28 w-28 xl:block"
+          aria-label="Scroll down"
+        >
+          <svg viewBox="0 0 100 100" className="animate-spin-slow absolute inset-0 h-full w-full">
+            <defs>
+              <path id="circ" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
+            </defs>
+            <text className="fill-fg/60 text-[9.5px] uppercase tracking-[0.25em]">
+              <textPath href="#circ">scroll down • explore more •</textPath>
+            </text>
+          </svg>
+          <span className="absolute inset-0 grid place-items-center">
+            <ArrowDownRight className="h-6 w-6 text-accent" />
+          </span>
+        </motion.a>
       </motion.div>
     </section>
   );

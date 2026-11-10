@@ -25,7 +25,7 @@ export function Contact() {
     <section id="contact" className="mx-auto max-w-7xl px-5 py-28 md:px-8 md:py-36">
       <div className="grid gap-16 lg:grid-cols-[1fr_1.2fr]">
         <div>
-          <h2 className="font-display text-5xl leading-[1] font-semibold md:text-6xl">
+          <h2 className="font-display text-4xl leading-[1.05] font-semibold md:text-6xl">
             <SplitText text="Let's build" /> <SplitText text="something" delay={0.15} />{" "}
             <SplitText text="iconic." className="text-gradient" delay={0.3} />
           </h2>

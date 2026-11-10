@@ -14,7 +14,7 @@ export function Marquee() {
     <section className="relative overflow-hidden border-y border-fg/10 py-14">
       <motion.div style={{ rotate: skew }} className="flex w-max animate-marquee [--speed:35s]">
         {[...items, ...items, ...items, ...items].map((t, i) => (
-          <span key={i} className="font-display flex items-center gap-8 pr-8 text-5xl leading-[1.2] font-semibold whitespace-nowrap md:text-7xl">
+          <span key={i} className="font-display flex items-center gap-8 pr-8 text-4xl leading-[1.2] font-semibold whitespace-nowrap md:text-6xl">
             <span className={i % 2 ? "text-outline" : ""}>{t}</span>
             <span className="text-accent">✦</span>
           </span>
@@ -110,7 +110,7 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
         </div>
         <div className="relative mt-16">
           <div className="mb-5 h-1 w-10 rounded-full transition-all duration-500 group-hover:w-24" style={{ background: s.color }} />
-          <h3 className="font-display mb-4 text-3xl font-semibold">{s.title}</h3>
+          <h3 className="font-display mb-3 text-2xl font-semibold">{s.title}</h3>
           <p className="mb-6 text-fg/60">{s.desc}</p>
           <div className="flex flex-wrap gap-2">
             {s.tags.map((t) => (
@@ -130,7 +130,7 @@ export function Services() {
     <section id="services" className="mx-auto max-w-7xl px-5 py-28 md:px-8 md:py-36">
       <SectionLabel>What we do</SectionLabel>
       <div className="mb-16 grid gap-8 md:grid-cols-[1.4fr_1fr] md:items-end">
-        <h2 className="font-display text-4xl leading-[1.05] font-semibold md:text-6xl">
+        <h2 className="font-display text-3xl leading-[1.08] font-semibold md:text-5xl">
           <SplitText text="Everything your brand needs to" /> <SplitText text="win online." className="text-gradient" delay={0.3} />
         </h2>
         <FadeUp>
@@ -182,7 +182,7 @@ function WorkCard({ w, i }: { w: (typeof work)[number]; i: number }) {
         </div>
       </div>
       <div className="mt-5 flex items-center justify-between">
-        <h3 className="font-display text-2xl font-semibold md:text-3xl">{w.title}</h3>
+        <h3 className="font-display text-xl font-semibold md:text-2xl">{w.title}</h3>
         <ArrowUpRight className="h-6 w-6 transition-transform duration-500 group-hover:rotate-45" />
       </div>
     </motion.a>
@@ -193,7 +193,7 @@ export function Work() {
   return (
     <section id="work" className="mx-auto max-w-7xl px-5 py-28 md:px-8 md:py-36">
       <SectionLabel>Selected work</SectionLabel>
-      <h2 className="font-display mb-20 text-4xl leading-[1.05] font-semibold md:text-6xl">
+      <h2 className="font-display mb-20 text-3xl leading-[1.08] font-semibold md:text-5xl">
         <SplitText text="Work that" /> <SplitText text="performs." className="text-outline" delay={0.2} />
       </h2>
       <div className="grid gap-10 md:grid-cols-2 md:gap-14">
@@ -225,7 +225,7 @@ export function Process() {
         <div className="mx-auto mb-12 w-full max-w-7xl px-5 md:px-8">
           <SectionLabel>How we work</SectionLabel>
           <div className="flex items-end justify-between gap-6">
-            <h2 className="font-display text-4xl leading-[1.05] font-semibold md:text-6xl">
+            <h2 className="font-display text-3xl leading-[1.08] font-semibold md:text-5xl">
               <SplitText text="From idea to impact." />
             </h2>
             <div className="hidden h-px w-60 bg-fg/10 md:block">
@@ -244,13 +244,13 @@ export function Process() {
               </span>
               <span className="font-display text-accent">Step {p.step}</span>
               <div>
-                <h3 className="font-display mb-4 text-4xl font-semibold md:text-5xl">{p.title}</h3>
+                <h3 className="font-display mb-4 text-3xl font-semibold md:text-4xl">{p.title}</h3>
                 <p className="max-w-md text-lg text-fg/60">{p.desc}</p>
               </div>
             </div>
           ))}
           <div className="flex h-[52vh] w-[82vw] shrink-0 flex-col items-start justify-center rounded-3xl bg-accent p-8 text-white md:w-[38vw] md:p-12">
-            <h3 className="font-display mb-6 text-4xl font-semibold md:text-5xl">Ready when you are.</h3>
+            <h3 className="font-display mb-6 text-3xl font-semibold md:text-4xl">Ready when you are.</h3>
             <a href="#contact" className="rounded-full bg-black px-6 py-3 text-sm font-semibold text-white">
               Book a free strategy call →
             </a>
@@ -268,7 +268,7 @@ export function Stats() {
       <div className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-fg/10 bg-fg/10 md:grid-cols-4">
         {stats.map((s, i) => (
           <FadeUp key={s.label} delay={i * 0.08} className="bg-bg p-8 md:p-10">
-            <div className="font-display text-5xl font-semibold md:text-7xl">
+            <div className="font-display text-4xl font-semibold md:text-6xl">
               <Counter to={s.value} suffix={s.suffix} />
             </div>
             <p className="mt-3 text-sm text-fg/60">{s.label}</p>
@@ -300,7 +300,7 @@ export function Testimonials() {
               <Star key={k} className="h-4 w-4 fill-current" />
             ))}
           </div>
-          <blockquote className="mb-6 text-lg leading-relaxed text-fg/85">“{t.quote}”</blockquote>
+          <blockquote className="mb-6 text-base leading-relaxed text-fg/85">“{t.quote}”</blockquote>
           <figcaption className="flex items-center gap-3">
             <span className="grid h-10 w-10 place-items-center rounded-full bg-accent-2 font-semibold text-white">
               {t.name[0]}
@@ -318,7 +318,7 @@ export function Testimonials() {
     <section className="py-28 md:py-36">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <SectionLabel>Client love</SectionLabel>
-        <h2 className="font-display mb-16 text-4xl leading-[1.05] font-semibold md:text-6xl">
+        <h2 className="font-display mb-16 text-3xl leading-[1.08] font-semibold md:text-5xl">
           <SplitText text="Don't take our" /> <SplitText text="word for it." className="text-gradient" delay={0.2} />
         </h2>
       </div>
@@ -337,7 +337,7 @@ export function FAQ() {
     <section id="faq" className="mx-auto grid max-w-7xl gap-12 px-5 py-28 md:grid-cols-[1fr_1.4fr] md:px-8 md:py-36">
       <div>
         <SectionLabel>FAQ</SectionLabel>
-        <h2 className="font-display text-4xl leading-[1.05] font-semibold md:text-6xl">
+        <h2 className="font-display text-3xl leading-[1.08] font-semibold md:text-5xl">
           <SplitText text="Questions? Answered." />
         </h2>
       </div>
@@ -345,7 +345,7 @@ export function FAQ() {
         {faqs.map((f, i) => (
           <FadeUp key={f.q} delay={i * 0.05} y={20}>
             <button onClick={() => setOpen(open === i ? null : i)} className="flex w-full items-center justify-between gap-6 py-7 text-left">
-              <span className="font-display text-xl font-semibold md:text-2xl">{f.q}</span>
+              <span className="font-display text-lg font-semibold md:text-xl">{f.q}</span>
               <motion.span
                 animate={{ rotate: open === i ? 45 : 0 }}
                 className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border transition-colors ${

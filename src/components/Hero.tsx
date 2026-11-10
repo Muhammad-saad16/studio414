@@ -1,14 +1,27 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
-import { ArrowUpRight, Code2, Megaphone, Palette, PenTool, Search, Share2 } from "lucide-react";
-import { services, site } from "@/lib/site";
+import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
+import { ArrowUpRight, Sparkles } from "lucide-react";
 import { Button, ease } from "./ui";
 
 const words = ["brands", "growth", "rankings", "stories", "revenue"];
-const icons = [PenTool, Palette, Megaphone, Search, Share2, Code2];
 
 export default function Hero() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "35%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const smx = useSpring(mx, { stiffness: 40, damping: 20 });
+  const smy = useSpring(my, { stiffness: 40, damping: 20 });
+  const bx = useTransform(smx, (v) => v * 60);
+  const by = useTransform(smy, (v) => v * 60);
+  const bx2 = useTransform(smx, (v) => v * -40);
+  const by2 = useTransform(smy, (v) => v * -40);
+
   const [i, setI] = useState(0);
   useEffect(() => {
     const id = setInterval(() => setI((p) => (p + 1) % words.length), 2200);
@@ -18,43 +31,70 @@ export default function Hero() {
   const d = 2.7; // wait for preloader
 
   return (
-    <>
-      <section id="top" className="relative flex min-h-[92svh] items-center overflow-hidden pt-32 pb-10">
-        <div className="grid-bg pointer-events-none absolute inset-0" />
+    <section
+      id="top"
+      ref={ref}
+      onMouseMove={(e) => {
+        mx.set(e.clientX / window.innerWidth - 0.5);
+        my.set(e.clientY / window.innerHeight - 0.5);
+      }}
+      className="relative flex min-h-[100svh] items-center overflow-hidden pt-28 pb-16"
+    >
+      {/* background */}
+      <div className="grid-bg pointer-events-none absolute inset-0" />
+      {/* solid floating shapes — shades of one colour */}
+      <motion.div style={{ x: bx, y: by }} className="pointer-events-none absolute right-[7%] top-[22%] hidden md:block">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: d + 0.4, type: "spring", stiffness: 120, damping: 12 }}
+          className="h-32 w-32 rounded-full bg-accent lg:h-40 lg:w-40"
+        />
+      </motion.div>
+      <motion.div style={{ x: bx2, y: by2 }} className="pointer-events-none absolute right-[23%] top-[15%] hidden md:block">
+        <motion.div
+          initial={{ scale: 0, rotate: -45 }}
+          animate={{ scale: 1, rotate: 315 }}
+          transition={{ scale: { delay: d + 0.55, type: "spring", stiffness: 120, damping: 12 }, rotate: { delay: d + 0.55, duration: 30, repeat: Infinity, ease: "linear" } }}
+          className="h-16 w-16 rounded-2xl bg-accent-2 lg:h-20 lg:w-20"
+        />
+      </motion.div>
+      <motion.div style={{ x: bx2, y: by }} className="pointer-events-none absolute bottom-[28%] right-[5%] hidden md:block">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1, y: [0, -14, 0] }}
+          transition={{ scale: { delay: d + 0.7, type: "spring", stiffness: 120, damping: 12 }, y: { delay: d + 1, duration: 3, repeat: Infinity, ease: "easeInOut" } }}
+          className="h-10 w-10 rounded-full bg-accent-3"
+        />
+      </motion.div>
 
-        <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-5 text-center md:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: d, duration: 0.8, ease }}
-            className="mb-8 inline-flex items-center gap-2 rounded-full border border-fg/10 bg-fg/[0.03] px-4 py-2 text-[11px] uppercase tracking-[0.25em] text-fg/70"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
-            </span>
-            Creative &amp; growth agency
-          </motion.div>
+      <motion.div style={{ y, opacity, scale }} className="relative mx-auto w-full max-w-7xl px-5 md:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: d, duration: 0.8, ease }}
+          className="mb-8 inline-flex items-center gap-2 rounded-full border border-fg/10 bg-fg/5 px-4 py-2 text-xs text-fg/80 backdrop-blur"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+          </span>
+          Now booking projects for 2027
+        </motion.div>
 
-          <h1 className="font-display text-[clamp(44px,7vw,104px)] leading-[1.02] font-semibold">
-            <span className="block overflow-hidden">
+        <h1 className="font-display text-[11vw] leading-[0.98] font-semibold md:text-[6.5vw] xl:text-[6.25rem]">
+          {["We craft", "bold"].map((line, li) => (
+            <span key={li} className="block overflow-hidden">
               <motion.span
                 className="inline-block"
                 initial={{ y: "110%" }}
                 animate={{ y: 0 }}
-                transition={{ delay: d, duration: 1, ease }}
+                transition={{ delay: d + li * 0.12, duration: 1, ease }}
               >
-                We craft bold
+                {line}
               </motion.span>
-            </span>
-            <span className="block overflow-hidden">
-              <motion.span
-                className="inline-flex items-baseline justify-center gap-[0.25em]"
-                initial={{ y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{ delay: d + 0.12, duration: 1, ease }}
-              >
-                <span className="relative inline-flex h-[1.1em] overflow-hidden">
+              {li === 1 && (
+                <span className="relative ml-[0.25em] inline-flex h-[1.05em] overflow-hidden align-bottom">
                   <AnimatePresence mode="popLayout">
                     <motion.span
                       key={words[i]}
@@ -68,26 +108,43 @@ export default function Hero() {
                     </motion.span>
                   </AnimatePresence>
                 </span>
-                <span>that scale.</span>
-              </motion.span>
+              )}
             </span>
-          </h1>
+          ))}
+          <span className="block overflow-hidden">
+            <motion.span
+              className="inline-flex items-center gap-[0.2em]"
+              initial={{ y: "110%" }}
+              animate={{ y: 0 }}
+              transition={{ delay: d + 0.24, duration: 1, ease }}
+            >
+              <span className="text-outline">that</span> scale.
+              <motion.span
+                className="hidden h-[0.75em] w-[0.75em] place-items-center rounded-full bg-accent text-white md:grid"
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
+              >
+                <Sparkles className="h-[0.4em] w-[0.4em]" strokeWidth={2.5} />
+              </motion.span>
+            </motion.span>
+          </span>
+        </h1>
 
+        <div className="mt-12 grid gap-10 md:grid-cols-[1fr_auto] md:items-end">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: d + 0.4, duration: 0.9, ease }}
-            className="mt-8 max-w-xl text-base leading-relaxed text-fg/60 md:text-lg"
+            transition={{ delay: d + 0.5, duration: 0.9, ease }}
+            className="max-w-xl text-base leading-relaxed text-fg/65 md:text-lg"
           >
-            Graphic design, branding, performance marketing and SEO — under one roof, obsessed with one metric:{" "}
-            <span className="text-fg">your growth.</span>
+            A full-service creative & growth agency. Graphic design, branding, performance marketing and SEO —
+            under one roof, obsessed with one metric: <span className="text-fg">your growth.</span>
           </motion.p>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: d + 0.55, duration: 0.9, ease }}
-            className="mt-10 flex flex-wrap justify-center gap-4"
+            transition={{ delay: d + 0.65, duration: 0.9, ease }}
+            className="flex flex-wrap gap-4"
           >
             <Button href="#contact">
               Start a project <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
@@ -97,105 +154,8 @@ export default function Hero() {
             </Button>
           </motion.div>
         </div>
-      </section>
 
-      <Showcase delay={d + 0.7} />
-    </>
-  );
-}
-
-/** Framed "studio board" that grows to full width as you scroll. */
-function Showcase({ delay }: { delay: number }) {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end end"] });
-  const width = useTransform(scrollYProgress, [0, 0.6], ["64vw", "94vw"]);
-  const radius = useTransform(scrollYProgress, [0, 0.6], [24, 14]);
-  const rotateX = useTransform(scrollYProgress, [0, 0.5], [18, 0]);
-  const tilesY = useTransform(scrollYProgress, [0.3, 1], [40, -20]);
-
-  return (
-    <section ref={ref} className="relative h-[170vh]">
-      <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden [perspective:1400px]">
-        <motion.div
-          initial={{ opacity: 0, y: 80 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay, duration: 1.1, ease }}
-          style={{ width, borderRadius: radius, rotateX }}
-          className="relative aspect-[1.58/1] max-h-[86vh] min-w-[88vw] overflow-hidden border border-fg/10 bg-bg-2 md:min-w-0"
-        >
-          {/* window chrome */}
-          <div className="flex items-center justify-between border-b border-fg/[0.06] px-4 py-3 md:px-5">
-            <div className="flex gap-1.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-            </div>
-            <span className="text-[11px] uppercase tracking-[0.25em] text-fg/40">{site.name} · Studio</span>
-            <span className="w-12" />
-          </div>
-
-          <div className="grid h-[calc(100%-45px)] grid-cols-[1fr] gap-3 p-3 md:grid-cols-[0.9fr_2fr] md:gap-4 md:p-5">
-            {/* left: brief card */}
-            <div className="hidden flex-col justify-between rounded-xl border border-fg/[0.06] bg-fg/[0.015] p-5 md:flex">
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.25em] text-fg/40">Current brief</p>
-                <p className="font-display mt-4 text-2xl leading-tight font-semibold lg:text-3xl">
-                  Launch a brand people <span className="text-accent">remember.</span>
-                </p>
-              </div>
-              <div className="space-y-3">
-                {["Strategy", "Identity", "Campaign", "Launch"].map((t, k) => (
-                  <div key={t} className="flex items-center gap-3 text-sm text-fg/70">
-                    <span className={`grid h-5 w-5 place-items-center rounded-md text-[10px] ${k < 3 ? "bg-accent text-white" : "border border-fg/15"}`}>
-                      {k < 3 ? "✓" : ""}
-                    </span>
-                    {t}
-                  </div>
-                ))}
-                <div className="h-1.5 overflow-hidden rounded-full bg-fg/10">
-                  <motion.div
-                    className="h-full rounded-full bg-accent"
-                    initial={{ width: "0%" }}
-                    whileInView={{ width: "75%" }}
-                    transition={{ duration: 1.6, ease, delay: 0.3 }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* right: service tiles */}
-            <motion.div style={{ y: tilesY }} className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
-              {services.map((s, k) => {
-                const Icon = icons[k % icons.length];
-                const solid = k === 0 || k === 4;
-                return (
-                  <motion.div
-                    key={s.title}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, ease, delay: k * 0.07 }}
-                    className={`flex flex-col justify-between rounded-xl p-4 md:p-5 ${
-                      solid ? "bg-accent text-white" : "border border-fg/[0.06] bg-fg/[0.015]"
-                    }`}
-                  >
-                    <span
-                      className={`grid h-9 w-9 place-items-center rounded-lg ${solid ? "bg-white/15" : ""}`}
-                      style={solid ? undefined : { backgroundColor: `${s.color}26`, color: s.color }}
-                    >
-                      <Icon className="h-4 w-4" />
-                    </span>
-                    <div>
-                      <p className="font-display text-base leading-tight font-semibold md:text-lg">{s.title}</p>
-                      <p className={`mt-1 hidden text-xs lg:block ${solid ? "text-white/70" : "text-fg/45"}`}>{s.tags.slice(0, 2).join(" · ")}</p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

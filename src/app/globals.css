@@ -1,25 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #000000;
-  --bg-2: #0a0a0c;
-  --fg: #f7f4fb;
-  --muted: #8f8a9b;
-  --line: rgba(255, 255, 255, 0.06);
+  /* one colour (violet) and its shades */
+  --bg: #0b0814;
+  --bg-2: #141022;
+  --fg: #efeaf9;
+  --muted: #8e86a6;
+  --line: rgba(190, 160, 255, 0.08);
   --accent: #8c52ff;
-  --accent-2: #5b5bf5;
-  --accent-3: #b48cff;
-  --accent-ink: #b48cff; /* accent used as TEXT colour */
+  --accent-2: #5e2fc4;
+  --accent-3: #c3a6ff;
+  --accent-ink: #b896ff; /* accent used as TEXT colour */
 }
 
 /* ---------- light theme ---------- */
 :root[data-theme="light"] {
-  --bg: #ffffff;
-  --bg-2: #f6f3fb;
-  --fg: #0a0a0c;
-  --muted: #6b6676;
-  --line: rgba(0, 0, 0, 0.07);
-  --accent-ink: #7b2fbe;
+  --bg: #f8f5fe;
+  --bg-2: #eee7fb;
+  --fg: #170f2b;
+  --muted: #6e6585;
+  --line: rgba(60, 20, 140, 0.08);
+  --accent-ink: #5e2fc4;
 }
 
 @theme inline {

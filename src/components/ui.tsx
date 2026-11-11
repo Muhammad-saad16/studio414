@@ -1,5 +1,6 @@
 "use client";
 import { useRef, type ReactNode } from "react";
+import Link from "next/link";
 import { motion, useMotionValue, useSpring, useInView, animate } from "motion/react";
 import { useEffect } from "react";
 import { site } from "@/lib/site";
@@ -109,14 +110,14 @@ export function Button({
       : "border border-fg/20 text-fg hover:text-white";
   return (
     <Magnetic>
-      <a href={href} className={`${base} ${styles}`}>
+      <Link href={href} className={`${base} ${styles}`}>
         <span
           className={`absolute inset-0 translate-y-full rounded-full transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0 ${
             variant === "primary" ? "bg-accent-2" : "bg-accent"
           }`}
         />
         <span className="relative flex items-center gap-3">{children}</span>
-      </a>
+      </Link>
     </Magnetic>
   );
 }

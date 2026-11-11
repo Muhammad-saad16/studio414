@@ -2,12 +2,29 @@
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform, type MotionValue } from "motion/react";
 import { ArrowUpRight, Plus, Star } from "lucide-react";
-import { clients, faqs, process, services, stats, testimonials, work } from "@/lib/site";
-import { Counter, FadeUp, SectionLabel, SplitText, ease } from "./ui";
+import Link from "next/link";
+import {
+  clients,
+  customWork,
+  site,
+  slugify,
+  values,
+  faqs as defaultFaqs,
+  process,
+  services as defaultServices,
+  stats,
+  testimonials as defaultTestimonials,
+  work as defaultWork,
+  type Faq,
+  type Project,
+  type Service,
+  type Testimonial,
+} from "@/lib/site";
+import { Button, Counter, FadeUp, SectionLabel, SplitText, ease } from "./ui";
 
 /* ---------------------------------------------------------- Marquee */
 export function Marquee() {
-  const items = ["Graphic Design", "Branding", "Digital Marketing", "SEO", "Social Media", "Web Design"];
+  const items = ["Creative & Design", "Video & Motion", "Websites & Software", "AI Automation", "Marketing", "Publishing"];
   const { scrollYProgress } = useScroll();
   const skew = useSpring(useTransform(scrollYProgress, [0, 1], [-3, 3]), { stiffness: 80, damping: 20 });
   return (
@@ -34,11 +51,11 @@ function Word({ children, progress, range }: { children: string; progress: Motio
   );
 }
 
-export function About() {
+export function About({ storyLink = false }: { storyLink?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.4"] });
   const text =
-    "Most agencies sell you deliverables. We sell outcomes. Strategy, design and marketing working as one system — so your brand looks world-class, ranks on page one, and turns attention into revenue.";
+    "Our mission: to help ambitious brands flourish through ideas that are imaginatively crafted and strategically built.";
   const words = text.split(" ");
   return (
     <section id="about" className="mx-auto max-w-7xl px-5 py-28 md:px-8 md:py-40">
@@ -50,16 +67,23 @@ export function About() {
           </Word>
         ))}
       </div>
-      <div className="mt-16 grid gap-6 md:grid-cols-3">
-        {[
-          ["Strategy first", "Every pixel and every ad starts with research, positioning and a plan."],
-          ["One team, all skills", "Designers, marketers, SEOs and developers — no outsourcing, no handoffs."],
-          ["Radically transparent", "Live dashboards and plain-language reports. You always know what's working."],
-        ].map(([t, d], i) => (
-          <FadeUp key={t} delay={i * 0.1} className="rounded-3xl border border-fg/10 bg-fg/[0.02] p-8">
+      <FadeUp className="mt-12 max-w-3xl">
+        <p className="text-lg text-fg/60">
+          <span className="text-fg">Our vision:</span> {site.vision}
+        </p>
+        {storyLink && (
+          <Link href="/about" className="mt-6 inline-flex items-center gap-2 font-semibold text-accent">
+            Read our story <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        )}
+      </FadeUp>
+      <p className="mt-20 mb-6 text-xs tracking-[0.3em] text-muted uppercase">What we stand for</p>
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        {values.map((v, i) => (
+          <FadeUp key={v.title} delay={i * 0.08} className="rounded-3xl border border-fg/10 bg-fg/[0.02] p-7">
             <div className="mb-6 font-display text-sm text-accent">0{i + 1}</div>
-            <h3 className="font-display mb-3 text-2xl font-semibold">{t}</h3>
-            <p className="text-fg/60">{d}</p>
+            <h3 className="font-display mb-3 text-xl font-semibold">{v.title}</h3>
+            <p className="text-sm text-fg/60">{v.desc}</p>
           </FadeUp>
         ))}
       </div>
@@ -68,7 +92,7 @@ export function About() {
 }
 
 /* ---------------------------------------------------------- Services */
-function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
+function ServiceCard({ s, i }: { s: Service; i: number }) {
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const rx = useSpring(useMotionValue(0), { stiffness: 150, damping: 15 });
@@ -95,9 +119,10 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
           ry.set(0);
         }}
         style={{ rotateX: rx, rotateY: ry }}
-        className="group relative h-full overflow-hidden rounded-3xl border border-fg/10 bg-bg-2 p-8 transition-colors hover:border-fg/25"
+        className="group relative h-full overflow-hidden rounded-3xl border border-fg/10 bg-bg-2 transition-colors hover:border-fg/25"
         data-cursor="Explore"
       >
+        <Link href={`/services/${slugify(s.title)}`} className="block h-full p-8">
         <motion.div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ backgroundColor: `${s.color}1a` }} />
         <div className="relative flex items-start justify-between">
           <span className="font-display text-sm text-muted">{s.no}</span>
@@ -120,23 +145,24 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
             ))}
           </div>
         </div>
+        </Link>
       </motion.div>
     </motion.div>
   );
 }
 
-export function Services() {
+export function Services({ services = defaultServices }: { services?: Service[] }) {
   return (
     <section id="services" className="mx-auto max-w-7xl px-5 py-28 md:px-8 md:py-36">
       <SectionLabel>What we do</SectionLabel>
       <div className="mb-16 grid gap-8 md:grid-cols-[1.4fr_1fr] md:items-end">
         <h2 className="font-display text-3xl leading-[1.08] font-semibold md:text-5xl">
-          <SplitText text="Everything your brand needs to" /> <SplitText text="win online." className="text-gradient" delay={0.3} />
+          <SplitText text="Everything your idea needs to" /> <SplitText text="become a brand." className="text-gradient" delay={0.3} />
         </h2>
         <FadeUp>
           <p className="text-lg text-fg/60">
-            Pick one service or let us run the whole engine. Either way you get senior talent, fast turnaround, and work
-            that moves the numbers.
+            From the first idea to the finished product: creative, video, software, automation, marketing and publishing,
+            built by one team that owns the result.
           </p>
         </FadeUp>
       </div>
@@ -145,19 +171,26 @@ export function Services() {
           <ServiceCard key={s.title} s={s} i={i} />
         ))}
       </div>
+      <FadeUp className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-dashed border-fg/15 p-6 md:p-8">
+        <p className="text-fg/70">{customWork}</p>
+        <Link href="/contact" className="rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white">
+          Tell us about it →
+        </Link>
+      </FadeUp>
     </section>
   );
 }
 
 /* ---------------------------------------------------------- Work */
-function WorkCard({ w, i }: { w: (typeof work)[number]; i: number }) {
+function WorkCard({ w, i }: { w: Project; i: number }) {
   const ref = useRef<HTMLAnchorElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
   return (
     <motion.a
       ref={ref}
-      href="#contact"
+      href={w.link || "/contact"}
+      {...(w.link ? { target: "_blank", rel: "noreferrer" } : {})}
       data-cursor="View"
       initial={{ opacity: 0, y: 80 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -174,12 +207,16 @@ function WorkCard({ w, i }: { w: (typeof work)[number]; i: number }) {
           <div className="absolute left-1/2 top-1/2 h-[55%] w-[55%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-fg/30 transition-transform duration-1000 group-hover:scale-125" />
           <div className="absolute left-1/2 top-1/2 h-[35%] w-[35%] -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-[30%] bg-black/30 backdrop-blur-sm transition-transform duration-1000 group-hover:rotate-[135deg]" />
           <div className="font-display absolute bottom-[18%] left-[16%] text-6xl font-semibold text-white/20 md:text-8xl">{w.title.split(" ")[0]}</div>
+          {w.cover && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={w.cover} alt={w.title} className="absolute inset-0 h-full w-full object-cover" />
+          )}
         </motion.div>
         <div className="absolute left-5 top-5 rounded-full bg-black/40 px-4 py-2 text-xs backdrop-blur">{w.cat}</div>
-        <div className="absolute bottom-5 left-5 right-5 translate-y-4 rounded-2xl bg-black/50 p-4 opacity-0 backdrop-blur-md transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+        {w.result && <div className="absolute bottom-5 left-5 right-5 translate-y-4 rounded-2xl bg-black/50 p-4 opacity-0 backdrop-blur-md transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
           <span className="text-xs uppercase tracking-widest text-fg/60">Result</span>
           <div className="font-display text-xl font-semibold text-accent">{w.result}</div>
-        </div>
+        </div>}
       </div>
       <div className="mt-5 flex items-center justify-between">
         <h3 className="font-display text-xl font-semibold md:text-2xl">{w.title}</h3>
@@ -189,7 +226,8 @@ function WorkCard({ w, i }: { w: (typeof work)[number]; i: number }) {
   );
 }
 
-export function Work() {
+export function Work({ work = defaultWork, limit }: { work?: Project[]; limit?: number }) {
+  const list = limit ? work.slice(0, limit) : work;
   return (
     <section id="work" className="mx-auto max-w-7xl px-5 py-28 md:px-8 md:py-36">
       <SectionLabel>Selected work</SectionLabel>
@@ -197,10 +235,17 @@ export function Work() {
         <SplitText text="Work that" /> <SplitText text="performs." className="text-outline" delay={0.2} />
       </h2>
       <div className="grid gap-10 md:grid-cols-2 md:gap-14">
-        {work.map((w, i) => (
+        {list.map((w, i) => (
           <WorkCard key={w.title} w={w} i={i} />
         ))}
       </div>
+      {limit && work.length > 0 && (
+        <div className="mt-16 flex justify-center">
+          <Button href="/work" variant="ghost">
+            View all work <ArrowUpRight className="h-4 w-4" />
+          </Button>
+        </div>
+      )}
     </section>
   );
 }
@@ -251,9 +296,9 @@ export function Process() {
           ))}
           <div className="flex h-[52vh] w-[82vw] shrink-0 flex-col items-start justify-center rounded-3xl bg-accent p-8 text-white md:w-[38vw] md:p-12">
             <h3 className="font-display mb-6 text-3xl font-semibold md:text-4xl">Ready when you are.</h3>
-            <a href="#contact" className="rounded-full bg-black px-6 py-3 text-sm font-semibold text-white">
-              Book a free strategy call →
-            </a>
+            <Link href="/contact" className="rounded-full bg-black px-6 py-3 text-sm font-semibold text-white">
+              Start your project →
+            </Link>
           </div>
         </motion.div>
       </div>
@@ -290,8 +335,8 @@ export function Stats() {
 }
 
 /* ---------------------------------------------------------- Testimonials */
-export function Testimonials() {
-  const row = (list: typeof testimonials, reverse = false) => (
+export function Testimonials({ testimonials = defaultTestimonials }: { testimonials?: Testimonial[] }) {
+  const row = (list: Testimonial[], reverse = false) => (
     <div className={`flex w-max gap-5 ${reverse ? "animate-marquee-reverse" : "animate-marquee"} [--speed:60s]`}>
       {[...list, ...list].map((t, i) => (
         <figure key={i} className="w-[340px] shrink-0 rounded-3xl border border-fg/10 bg-bg-2 p-7 md:w-[420px]">
@@ -302,9 +347,14 @@ export function Testimonials() {
           </div>
           <blockquote className="mb-6 text-base leading-relaxed text-fg/85">“{t.quote}”</blockquote>
           <figcaption className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-full bg-accent-2 font-semibold text-white">
-              {t.name[0]}
-            </span>
+            {t.photo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={t.photo} alt={t.name} className="h-10 w-10 rounded-full object-cover" />
+            ) : (
+              <span className="grid h-10 w-10 place-items-center rounded-full bg-accent-2 font-semibold text-white">
+                {t.name[0]}
+              </span>
+            )}
             <span>
               <span className="block font-semibold">{t.name}</span>
               <span className="text-sm text-muted">{t.role}</span>
@@ -323,7 +373,7 @@ export function Testimonials() {
         </h2>
       </div>
       <div className="pause-hover space-y-5 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
-        {row(testimonials.slice(0, 3).concat(testimonials.slice(3)))}
+        {row(testimonials)}
         {row(testimonials.slice(3).concat(testimonials.slice(0, 3)), true)}
       </div>
     </section>
@@ -331,7 +381,7 @@ export function Testimonials() {
 }
 
 /* ---------------------------------------------------------- FAQ */
-export function FAQ() {
+export function FAQ({ faqs = defaultFaqs }: { faqs?: Faq[] }) {
   const [open, setOpen] = useState<number | null>(0);
   return (
     <section id="faq" className="mx-auto grid max-w-7xl gap-12 px-5 py-28 md:grid-cols-[1fr_1.4fr] md:px-8 md:py-36">

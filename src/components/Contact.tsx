@@ -2,7 +2,8 @@
 import { useRef, useState, type FormEvent } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowUpRight, Check } from "lucide-react";
-import { services, site, nav } from "@/lib/site";
+import Link from "next/link";
+import { services, site, nav, slugify } from "@/lib/site";
 import { FadeUp, Logo, Magnetic, SocialIcon, SplitText, ease } from "./ui";
 
 export function Contact() {
@@ -104,7 +105,7 @@ export function Footer() {
         <div className="md:col-span-2">
           <Logo />
           <p className="mt-4 max-w-sm text-fg/60">
-            Creative & growth agency for brands that want to lead, not follow.
+            {site.tagline}. A creative advertising company building brands, content and digital products.
           </p>
           <div className="mt-6 flex gap-3">
             {Object.entries(site.socials).map(([k, v]) => (
@@ -122,9 +123,9 @@ export function Footer() {
         <div>
           <h4 className="mb-4 text-xs uppercase tracking-[0.3em] text-muted">Navigate</h4>
           <ul className="space-y-2">
-            {nav.map((n) => (
+            {[{ label: "Home", href: "/" }, ...nav].map((n) => (
               <li key={n.href}>
-                <a href={n.href} className="text-fg/70 transition-colors hover:text-accent">{n.label}</a>
+                <Link href={n.href} className="text-fg/70 transition-colors hover:text-accent">{n.label}</Link>
               </li>
             ))}
           </ul>
@@ -134,7 +135,7 @@ export function Footer() {
           <ul className="space-y-2">
             {services.map((s) => (
               <li key={s.title}>
-                <a href="#services" className="text-fg/70 transition-colors hover:text-accent">{s.title}</a>
+                <Link href={`/services/${slugify(s.title)}`} className="text-fg/70 transition-colors hover:text-accent">{s.title}</Link>
               </li>
             ))}
           </ul>

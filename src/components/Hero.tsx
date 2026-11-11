@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTrans
 import { ArrowDownRight, ArrowUpRight, Sparkles } from "lucide-react";
 import { Button, ease } from "./ui";
 
-const words = ["brands", "growth", "rankings", "stories", "revenue"];
+const words = ["ideas", "brands", "stories", "products", "growth"];
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -32,7 +32,7 @@ export default function Hero() {
 
   return (
     <section
-      id="top"
+
       ref={ref}
       onMouseMove={(e) => {
         mx.set(e.clientX / window.innerWidth - 0.5);
@@ -121,8 +121,8 @@ export default function Hero() {
             transition={{ delay: d + 0.5, duration: 0.9, ease }}
             className="max-w-xl text-lg leading-relaxed text-fg/70"
           >
-            A full-service creative & growth agency. Graphic design, branding, performance marketing and SEO —
-            under one roof, obsessed with one metric: <span className="text-fg">your growth.</span>
+            A creative advertising company that builds brands, content and digital products. Design, video, software,
+            AI automation and marketing, all under one roof. <span className="text-fg">Where ideas are born, and brands are made.</span>
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -130,10 +130,10 @@ export default function Hero() {
             transition={{ delay: d + 0.65, duration: 0.9, ease }}
             className="flex flex-wrap gap-4"
           >
-            <Button href="#contact">
+            <Button href="/contact">
               Start a project <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
             </Button>
-            <Button href="#work" variant="ghost">
+            <Button href="/work" variant="ghost">
               See our work
             </Button>
           </motion.div>

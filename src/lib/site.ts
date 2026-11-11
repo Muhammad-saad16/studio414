@@ -6,7 +6,11 @@
 export const site = {
   name: "Sarté",
   logo: null as string | null, // e.g. "/logo.svg"
-  tagline: "Design. Marketing. Growth.",
+  tagline: "Where ideas are born, and brands are made",
+  description:
+    "Sarté is a creative advertising company that builds brands, content and digital products: design, video & motion, websites & software, AI automation, marketing and publishing.",
+  mission: "To help ambitious brands flourish through ideas that are imaginatively crafted and strategically built.",
+  vision: "To be the partner every visionary brand turns to when an idea deserves to be seen by the world.",
   year: 2026,
   email: "hello@sarte.studio",
   phone: "+92 300 0000000",
@@ -20,56 +24,68 @@ export const site = {
 };
 
 export const nav = [
-  { label: "Services", href: "#services" },
-  { label: "Work", href: "#work" },
-  { label: "Process", href: "#process" },
-  { label: "About", href: "#about" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Services", href: "/services" },
+  { label: "Work", href: "/work" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
+
+export const slugify = (s: string) =>
+  s.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 export const services = [
   {
     no: "01",
-    title: "Graphic Design",
-    desc: "Scroll-stopping visuals for print, social and digital — posters, packaging, decks and everything in between.",
-    tags: ["Social creatives", "Packaging", "Print", "Pitch decks"],
+    title: "Creative & Design",
+    desc: "Ad creatives, static posts and brand identity that stop the scroll and make you instantly recognisable.",
+    tags: ["Ad creatives", "Static posts", "Graphic design", "Brand identity", "Visual design"],
     color: "#8c52ff",
   },
   {
     no: "02",
-    title: "Brand Identity",
-    desc: "Logos, type, colour and voice that make you instantly recognisable — and impossible to forget.",
-    tags: ["Logo design", "Brand guidelines", "Naming", "Rebrands"],
+    title: "Video & Motion",
+    desc: "Reels, motion graphics, launch films and explainers, edited to hold attention from the first frame to the last.",
+    tags: ["Reels & short-form", "Motion graphics", "Launch videos", "Explainers", "Video editing"],
     color: "#a57cff",
   },
   {
     no: "03",
-    title: "Digital Marketing",
-    desc: "Performance campaigns on Meta, Google and TikTok engineered for one thing: measurable revenue.",
-    tags: ["Meta Ads", "Google Ads", "TikTok Ads", "Funnels"],
+    title: "Digital & Software",
+    desc: "Websites, applications and back-office software built to be fast, reliable and ready to scale with you.",
+    tags: ["Websites", "Applications", "Software solutions", "Back-office systems"],
     color: "#c3a6ff",
   },
   {
     no: "04",
-    title: "SEO",
-    desc: "Technical, on-page and content SEO that pushes you to page one — and keeps you there.",
-    tags: ["Technical SEO", "Local SEO", "Content", "Link building"],
+    title: "AI Automation",
+    desc: "We automate your current systems, from lead follow-ups and customer support to reporting and workflows, for up to 75% more productivity and a calmer, better-run operation.",
+    tags: ["Lead follow-ups", "Customer support", "Reporting", "Workflows"],
     color: "#7440e6",
   },
   {
     no: "05",
-    title: "Social Media",
-    desc: "Content calendars, reels and community management that turn followers into customers.",
-    tags: ["Strategy", "Reels", "Community", "Influencers"],
+    title: "Marketing",
+    desc: "Paid advertising on Meta and beyond, plus brand visibility work that turns attention into steady growth.",
+    tags: ["Meta Ads", "Paid advertising", "Brand visibility", "Growth"],
     color: "#b896ff",
   },
   {
     no: "06",
-    title: "Web Design & Dev",
-    desc: "Fast, animated, conversion-focused websites and stores built on modern tech.",
-    tags: ["UI/UX", "Next.js", "Shopify", "WordPress"],
+    title: "E-Book & Publishing",
+    desc: "From the first draft to the bookshelf: writing, covers, illustration, publishing and the marketing that gets a book read.",
+    tags: ["Cover design & illustration", "Ghostwriting & editing", "Publishing & printing", "Author websites", "Book trailers", "Book reviews"],
     color: "#9a6bff",
   },
+];
+
+export const customWork = "Need something that isn't listed? We take on custom work shaped around your needs.";
+
+export const values = [
+  { title: "Idea first", desc: "Every great outcome begins with a great idea. We think before we design, and we imagine before we execute." },
+  { title: "Ownership", desc: "We built Sarté with our own hands, and we treat every project the same way: the work, the results and the promise are ours." },
+  { title: "Craft", desc: "Excellence lives in the details. We refine relentlessly, because ordinary work is never our standard." },
+  { title: "Integrity", desc: "Honest advice, a transparent process and dependable delivery. Trust is the foundation of every long-term partnership." },
+  { title: "Boldness", desc: "We back original thinking and push past the predictable, because brands are remembered for the risks they dare to take." },
 ];
 
 export const work = [
@@ -104,33 +120,19 @@ export const work = [
 ];
 
 export const process = [
-  {
-    step: "01",
-    title: "Discover",
-    desc: "We dig into your business, audience and competitors to find the angle nobody else is using.",
-  },
-  {
-    step: "02",
-    title: "Strategise",
-    desc: "A clear roadmap — positioning, channels, KPIs and budget — so every rupee has a job.",
-  },
-  {
-    step: "03",
-    title: "Create",
-    desc: "Designers, writers and developers bring it to life with craft you can feel.",
-  },
-  {
-    step: "04",
-    title: "Launch & Grow",
-    desc: "We ship, measure, test and optimise — every week, with reports in plain language.",
-  },
+  { step: "01", title: "Brief", desc: "We listen first: your business, your audience, your goals, and what success looks like to you." },
+  { step: "02", title: "Concept", desc: "Ideas before execution. We shape the big idea and the strategy that will carry it." },
+  { step: "03", title: "Draft", desc: "Designers, editors and developers bring the concept to life with craft you can feel." },
+  { step: "04", title: "Review", desc: "You see the work early, with a clear walkthrough of every decision we made." },
+  { step: "05", title: "Revision", desc: "We refine on your feedback until every detail is right. Ordinary is never the standard." },
+  { step: "06", title: "Delivery", desc: "Final files, launched products and handover, delivered on the date we promised." },
 ];
 
 export const stats = [
-  { value: 250, suffix: "+", label: "Projects delivered" },
-  { value: 98, suffix: "%", label: "Client retention" },
-  { value: 6, suffix: "x", label: "Average ROAS" },
-  { value: 12, suffix: "M+", label: "Organic impressions" },
+  { value: 500, suffix: "+", label: "Projects delivered" },
+  { value: 50, suffix: "+", label: "People on the team" },
+  { value: 7, suffix: "+", label: "Years since day one" },
+  { value: 4, suffix: "", label: "Countries served" },
 ];
 
 export const testimonials = [
@@ -168,20 +170,24 @@ export const testimonials = [
 
 export const faqs = [
   {
-    q: "What services do you offer?",
-    a: "Graphic design, brand identity, digital marketing (Meta, Google, TikTok), SEO, social media management and website design & development — individually or as a full growth package.",
+    q: "What does Sarté do?",
+    a: "We're a creative advertising company that builds brands, content and digital products: creative & design, video & motion, websites & software, AI automation, paid marketing, and e-book & publishing.",
   },
   {
-    q: "How much does a project cost?",
-    a: "It depends on scope. We offer fixed-price projects for branding and websites, and monthly retainers for marketing, SEO and social. Book a free call and we'll send a clear proposal within 48 hours.",
+    q: "Who do you work with?",
+    a: "Business owners, founders, startups and big tech firms. Most of our clients are in the United States and the United Kingdom, and we also work with brands in Pakistan and the UAE.",
   },
   {
-    q: "How long until I see results?",
-    a: "Design and web projects typically ship in 2–6 weeks. Paid ads start producing data in days; SEO usually shows strong movement within 3–6 months.",
+    q: "What does the name Sarté mean?",
+    a: "Sarté stands for an idea, the starting point of all creative work. Everything we make starts there.",
   },
   {
-    q: "Do you work with clients outside Pakistan?",
-    a: "Yes — we work with brands across the UK, US, UAE and beyond, fully remote with weekly calls and live dashboards.",
+    q: "Can you take on work that isn't on your services list?",
+    a: "Yes. Alongside our core services we take on custom work shaped around each client's needs. Tell us what you have in mind.",
+  },
+  {
+    q: "How does a project run?",
+    a: "Brief, concept, draft, review, revision, delivery. You see the work at every stage and know exactly what's happening next.",
   },
   {
     q: "Will I own the final files?",
@@ -192,3 +198,66 @@ export const faqs = [
 export const clients = [
   "Bloom", "Vertex", "Urban Thread", "Saffron", "Kinetic", "Lumen", "Northwind", "Orbit", "Pulse", "Arcadia",
 ];
+
+// ---------------------------------------------------------------
+//  Our story — the journey, told chapter by chapter.
+// ---------------------------------------------------------------
+export const story = {
+  intro:
+    "Every great brand starts with an idea. Ours started in 2019 with one laptop, no safety net, and a stubborn belief that quality would speak for itself.",
+  chapters: [
+    {
+      year: "2019",
+      title: "One laptop. One idea.",
+      text: "It began alone. One person was the designer, the editor, the developer and the marketer, all at once. There was no team to lean on, only an idea worth chasing.",
+    },
+    {
+      year: "The early years",
+      title: "Long nights, tight deadlines.",
+      text: "The first years were a test: late nights, tight deadlines, and clients who didn't yet know the name. Every hurdle taught a lesson, and quality slowly became the reputation.",
+    },
+    {
+      year: "Growing",
+      title: "One became ten. Ten became a team.",
+      text: "One happy client told another. One became ten, and ten became a team. A partner with 9+ years in tech joined and brought the depth and discipline that turn good ideas into reliable products.",
+    },
+    {
+      year: "Today",
+      title: "50+ people. 500+ projects.",
+      text: "Today 50+ people build with us. Together we've delivered 500+ projects for founders, startups and established brands across Pakistan, the UAE, the US and the UK.",
+    },
+  ],
+  name: {
+    word: "Sarté",
+    meaning: "an idea",
+    text: "We called it Sarté, meaning an idea, because after 7+ years we still believe every great brand starts with one.",
+  },
+};
+
+// ---------------------------------------------------------------
+//  Founders — set `name` to show it above the role.
+// ---------------------------------------------------------------
+export const founders = [
+  {
+    name: "",
+    role: "Founder & Creative Director",
+    photo: "/team/founder.jpeg",
+    bio: "Started Sarté alone in 2019 and wore every hat: designer, editor, developer and marketer. Turned long nights and one happy client into a 50+ person team trusted across four countries.",
+    tags: ["Since 2019", "Brand & Design", "500+ projects"],
+  },
+  {
+    name: "",
+    role: "Co-founder & Technical Partner",
+    photo: "/team/partner.jpeg",
+    bio: "9+ years in the tech industry. Brings the depth and discipline that turn good ideas into reliable products, solves the problems others avoid, and keeps every client confident from the first call to final delivery.",
+    tags: ["9+ years in tech", "Engineering", "Client trust"],
+  },
+];
+
+// ---------------------------------------------------------------
+//  Shapes of CMS-driven content (Payload or the fallbacks above).
+// ---------------------------------------------------------------
+export type Service = { no: string; title: string; desc: string; tags: string[]; color: string };
+export type Project = { title: string; cat: string; result: string; from: string; cover?: string | null; link?: string | null };
+export type Testimonial = { quote: string; name: string; role: string; photo?: string | null };
+export type Faq = { q: string; a: string };

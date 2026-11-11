@@ -16,7 +16,8 @@ export async function getContent(): Promise<CMSContent> {
   "use cache";
   cacheTag("cms");
   try {
-    const payload = await getPayload({ config });
+    // Own instance key: never await the admin/API instance's init promise inside "use cache".
+    const payload = await getPayload({ config, key: "site-cache" });
     const q = { limit: 100, sort: "order", depth: 1 } as const;
     const [s, p, t, f] = await Promise.all([
       payload.find({ collection: "services", ...q }),

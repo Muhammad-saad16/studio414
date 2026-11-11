@@ -1,4 +1,6 @@
 import { sqliteAdapter } from "@payloadcms/db-sqlite";
+import { postgresAdapter } from "@payloadcms/db-postgres";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import path from "path";
 import { buildConfig, type Payload } from "payload";
@@ -10,6 +12,9 @@ import { faqs, services, testimonials, work } from "./lib/site";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
+
+// Production (Vercel): Neon Postgres via POSTGRES_URL. Local dev: SQLite file.
+const postgresUrl = process.env.POSTGRES_URL;
 
 /** First run: fill the empty CMS with the site's starter content. */
 async function seed(payload: Payload) {
@@ -46,7 +51,17 @@ export default buildConfig({
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: { outputFile: path.resolve(dirname, "payload-types.ts") },
-  db: sqliteAdapter({ client: { url: process.env.DATABASE_URL || "file:./sarte.db" } }),
+  db: postgresUrl
+    ? postgresAdapter({ pool: { connectionString: postgresUrl } })
+    : sqliteAdapter({ client: { url: process.env.SQLITE_URL || "file:./sarte.db" } }),
   sharp,
+  plugins: [
+    // Uploads go to Vercel Blob when a token is present; otherwise to the local /media folder.
+    vercelBlobStorage({
+      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      collections: { media: true },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    }),
+  ],
   onInit: seed,
 });

@@ -78,7 +78,7 @@ export default function Hero() {
                 {line}
               </motion.span>
               {li === 1 && (
-                <span className="relative ml-[0.25em] inline-flex h-[1.15em] overflow-hidden pr-[0.15em] align-bottom">
+                <span className="relative ml-[0.25em] inline-flex h-[1.05em] overflow-hidden pr-[0.15em] align-bottom">
                   <AnimatePresence mode="popLayout">
                     <motion.span
                       key={words[i]}

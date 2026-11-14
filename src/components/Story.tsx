@@ -1,62 +1,85 @@
 "use client";
 import { useRef } from "react";
-import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
+import { Globe, Laptop, Moon, Quote, Users, type LucideIcon } from "lucide-react";
 import { founders, story } from "@/lib/site";
 import { FadeUp, SectionLabel, SplitText, ease } from "./ui";
 
-/* ---------------------------------------------------------- Our story (journey timeline) */
+const icons: Record<string, LucideIcon> = { laptop: Laptop, moon: Moon, users: Users, globe: Globe };
+
+/* ---------------------------------------------------------- Our story (journey) */
 export function Story() {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.7", "end 0.6"] });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.75", "end 0.55"] });
   const line = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section id="story" className="mx-auto max-w-7xl px-5 py-28 md:px-8 md:py-36">
-      <SectionLabel>Our story</SectionLabel>
-      <div className="mb-20 grid gap-8 md:grid-cols-[1.3fr_1fr] md:items-end">
-        <h2 className="font-display text-3xl leading-[1.08] font-semibold md:text-5xl">
-          <SplitText text="It started with" /> <SplitText text="one idea." className="text-gradient" delay={0.25} />
-        </h2>
-        <FadeUp>
-          <p className="text-lg text-fg/60">{story.intro}</p>
-        </FadeUp>
-      </div>
-
-      <div ref={ref} className="relative">
-        {/* progress rail */}
-        <div className="absolute top-0 bottom-0 left-[11px] w-px bg-fg/10 md:left-1/2">
-          <motion.div style={{ height: line }} className="w-px bg-accent" />
+    <section id="story" className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
+      <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+        {/* left: sticky intro */}
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          <SectionLabel>The journey</SectionLabel>
+          <h2 className="font-display text-3xl leading-[1.08] font-semibold md:text-5xl">
+            <SplitText text="From one laptop" /> <SplitText text="to 50+ people." className="text-gradient" delay={0.2} />
+          </h2>
+          <FadeUp delay={0.1}>
+            <p className="mt-6 max-w-md text-lg text-fg/60">{story.intro}</p>
+          </FadeUp>
+          <FadeUp delay={0.2} className="mt-10 grid max-w-md grid-cols-3 gap-px overflow-hidden rounded-2xl border border-fg/10 bg-fg/10">
+            {[
+              ["7+", "Years"],
+              ["50+", "People"],
+              ["500+", "Projects"],
+            ].map(([v, l]) => (
+              <div key={l} className="bg-bg p-5">
+                <div className="font-display text-2xl font-semibold md:text-3xl">{v}</div>
+                <div className="mt-1 text-xs tracking-widest text-muted uppercase">{l}</div>
+              </div>
+            ))}
+          </FadeUp>
         </div>
 
-        <ol className="space-y-16 md:space-y-24">
-          {story.chapters.map((c, i) => {
-            const right = i % 2 === 1;
-            return (
-              <li key={c.title} className="relative grid md:grid-cols-2 md:gap-16">
-                <motion.span
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true, margin: "-20% 0px" }}
-                  transition={{ duration: 0.6, ease }}
-                  className="absolute top-1 left-0 grid h-6 w-6 place-items-center rounded-full border border-accent bg-bg md:left-1/2 md:-translate-x-1/2"
+        {/* right: chapters on a progress rail */}
+        <div ref={ref} className="relative pl-14 md:pl-20">
+          <div className="absolute top-2 bottom-2 left-[19px] w-px bg-fg/10 md:left-[27px]">
+            <motion.div style={{ height: line }} className="w-px bg-gradient-to-b from-accent to-accent-2" />
+          </div>
+          <ol className="space-y-8 md:space-y-10">
+            {story.chapters.map((c, i) => {
+              const Icon = icons[c.icon] ?? Laptop;
+              return (
+                <motion.li
+                  key={c.title}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-15% 0px" }}
+                  transition={{ duration: 0.9, ease }}
+                  className="relative"
                 >
-                  <span className="h-2 w-2 rounded-full bg-accent" />
-                </motion.span>
-                <FadeUp className={`pl-12 md:pl-0 ${right ? "md:col-start-2" : "md:text-right"}`}>
-                  <span className="font-display text-sm tracking-widest text-accent uppercase">{c.year}</span>
-                  <h3 className="font-display mt-3 mb-4 text-2xl font-semibold md:text-3xl">{c.title}</h3>
-                  <p className={`max-w-md text-fg/60 ${right ? "" : "md:ml-auto"}`}>{c.text}</p>
-                </FadeUp>
-              </li>
-            );
-          })}
-        </ol>
+                  <span className="absolute top-6 -left-14 grid h-10 w-10 place-items-center rounded-full border border-accent/50 bg-bg text-accent md:-left-20 md:h-14 md:w-14">
+                    <Icon className="h-4 w-4 md:h-5 md:w-5" />
+                  </span>
+                  <div className="group relative overflow-hidden rounded-3xl border border-fg/10 bg-bg-2 p-7 transition-colors hover:border-accent/40 md:p-9">
+                    <span className="font-display pointer-events-none absolute -top-6 -right-2 text-[8rem] leading-none font-semibold text-fg/[0.04] transition-colors group-hover:text-accent/10">
+                      0{i + 1}
+                    </span>
+                    <span className="relative inline-block rounded-full bg-accent/15 px-3 py-1 text-xs font-semibold tracking-widest text-accent uppercase">
+                      {c.year}
+                    </span>
+                    <h3 className="font-display relative mt-5 mb-3 text-2xl font-semibold md:text-3xl">{c.title}</h3>
+                    <p className="relative max-w-lg leading-relaxed text-fg/65">{c.text}</p>
+                  </div>
+                </motion.li>
+              );
+            })}
+          </ol>
+        </div>
       </div>
 
       {/* the name */}
-      <FadeUp className="mt-28 overflow-hidden rounded-3xl border border-fg/10 bg-bg-2 p-8 md:p-14">
-        <div className="grid gap-8 md:grid-cols-[auto_1fr] md:items-center md:gap-14">
+      <FadeUp className="relative mt-24 overflow-hidden rounded-[2rem] border border-fg/10 bg-bg-2 p-8 md:p-14">
+        <div aria-hidden className="absolute -top-32 -right-32 h-80 w-80 rounded-full bg-accent/20 blur-[100px]" />
+        <div className="relative grid gap-8 md:grid-cols-[auto_1fr] md:items-center md:gap-14">
           <div>
             <div className="font-display text-6xl leading-none font-semibold md:text-8xl">{story.name.word}</div>
             <div className="mt-3 text-sm tracking-[0.3em] text-muted uppercase">/ {story.name.meaning} /</div>
@@ -68,50 +91,49 @@ export function Story() {
   );
 }
 
-/* ---------------------------------------------------------- Founders */
+/* ---------------------------------------------------------- Founders (story, no photos) */
 export function Founders() {
   return (
-    <section id="founders" className="mx-auto max-w-7xl px-5 py-28 md:px-8 md:py-36">
+    <section id="founders" className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
       <SectionLabel>The founders</SectionLabel>
-      <h2 className="font-display mb-16 text-3xl leading-[1.08] font-semibold md:text-5xl">
+      <h2 className="font-display mb-16 max-w-4xl text-3xl leading-[1.08] font-semibold md:text-5xl">
         <SplitText text="Strong skills." /> <SplitText text="Strong relationships." className="text-outline" delay={0.2} />
       </h2>
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2">
         {founders.map((f, i) => (
           <motion.article
-            key={f.photo}
+            key={f.role}
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10% 0px" }}
             transition={{ duration: 0.9, ease, delay: i * 0.12 }}
-            className="group overflow-hidden rounded-3xl border border-fg/10 bg-bg-2"
+            className="relative flex flex-col overflow-hidden rounded-3xl border border-fg/10 bg-bg-2 p-8 md:p-10"
           >
-            <div className="relative aspect-[4/5] overflow-hidden">
-              <Image
-                src={f.photo}
-                alt={f.name || f.role}
-                fill
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover object-top transition-transform duration-1000 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-105"
-              />
-              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
-              <span className="absolute bottom-5 left-5 rounded-full bg-black/40 px-4 py-2 text-xs text-white backdrop-blur">
-                {f.role}
+            <div aria-hidden className={`absolute -top-24 h-64 w-64 rounded-full bg-accent/15 blur-[90px] ${i ? "-left-24" : "-right-24"}`} />
+            <div className="relative flex items-center gap-4">
+              <span className="font-display grid h-14 w-14 place-items-center rounded-2xl bg-accent text-2xl font-semibold text-white">
+                {(f.name || f.initial)[0]}
               </span>
-            </div>
-            <div className="p-7 md:p-9">
-              {f.name && <h3 className="font-display mb-1 text-2xl font-semibold">{f.name}</h3>}
-              <p className={`text-sm text-accent ${f.name ? "mb-4" : "font-display mb-4 text-xl font-semibold"}`}>
-                {f.role}
-              </p>
-              <p className="mb-6 text-fg/60">{f.bio}</p>
-              <div className="flex flex-wrap gap-2">
-                {f.tags.map((t) => (
-                  <span key={t} className="rounded-full border border-fg/10 px-3 py-1 text-xs text-fg/70">
-                    {t}
-                  </span>
-                ))}
+              <div>
+                {f.name && <div className="font-display text-xl font-semibold">{f.name}</div>}
+                <div className={f.name ? "text-sm text-accent" : "font-display text-lg font-semibold"}>{f.role}</div>
               </div>
+            </div>
+            <blockquote className="relative mt-8">
+              <Quote className="mb-3 h-7 w-7 text-accent" />
+              <p className="font-display text-xl leading-snug md:text-2xl">{f.quote}</p>
+            </blockquote>
+            <div className="relative mt-6 space-y-4 text-fg/65">
+              {f.story.map((p) => (
+                <p key={p.slice(0, 24)}>{p}</p>
+              ))}
+            </div>
+            <div className="relative mt-auto flex flex-wrap gap-2 pt-8">
+              {f.tags.map((t) => (
+                <span key={t} className="rounded-full border border-fg/10 px-3 py-1 text-xs text-fg/70">
+                  {t}
+                </span>
+              ))}
             </div>
           </motion.article>
         ))}

@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   images: {
-    localPatterns: [{ pathname: "/api/media/file/**" }, { pathname: "/team/**" }],
+    localPatterns: [{ pathname: "/api/media/file/**" }],
   },
   turbopack: {
     rules: {

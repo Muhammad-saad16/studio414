@@ -50,31 +50,31 @@ export const services = [
   },
   {
     no: "03",
-    title: "Digital & Software",
-    desc: "Websites, applications and back-office software built to be fast, reliable and ready to scale with you.",
-    tags: ["Websites", "Applications", "Software solutions", "Back-office systems"],
-    color: "#c3a6ff",
+    title: "E-Book & Publishing",
+    desc: "From the first draft to the bookshelf: writing, covers, illustration, publishing and the marketing that gets a book read.",
+    tags: ["Cover design & illustration", "Ghostwriting & editing", "Publishing & printing", "Author websites", "Book trailers", "Book reviews"],
+    color: "#9a6bff",
   },
   {
     no: "04",
-    title: "AI Automation",
-    desc: "We automate your current systems, from lead follow-ups and customer support to reporting and workflows, for up to 75% more productivity and a calmer, better-run operation.",
-    tags: ["Lead follow-ups", "Customer support", "Reporting", "Workflows"],
-    color: "#7440e6",
-  },
-  {
-    no: "05",
     title: "Marketing",
     desc: "Paid advertising on Meta and beyond, plus brand visibility work that turns attention into steady growth.",
     tags: ["Meta Ads", "Paid advertising", "Brand visibility", "Growth"],
     color: "#b896ff",
   },
   {
+    no: "05",
+    title: "AI Automation",
+    desc: "We automate your current systems, from lead follow-ups and customer support to reporting and workflows, for up to 75% more productivity and a calmer, better-run operation.",
+    tags: ["Lead follow-ups", "Customer support", "Reporting", "Workflows"],
+    color: "#7440e6",
+  },
+  {
     no: "06",
-    title: "E-Book & Publishing",
-    desc: "From the first draft to the bookshelf: writing, covers, illustration, publishing and the marketing that gets a book read.",
-    tags: ["Cover design & illustration", "Ghostwriting & editing", "Publishing & printing", "Author websites", "Book trailers", "Book reviews"],
-    color: "#9a6bff",
+    title: "Digital & Software",
+    desc: "Websites, applications and back-office software built to be fast, reliable and ready to scale with you.",
+    tags: ["Websites", "Applications", "Software solutions", "Back-office systems"],
+    color: "#c3a6ff",
   },
 ];
 
@@ -208,21 +208,25 @@ export const story = {
   chapters: [
     {
       year: "2019",
+      icon: "laptop",
       title: "One laptop. One idea.",
       text: "It began alone. One person was the designer, the editor, the developer and the marketer, all at once. There was no team to lean on, only an idea worth chasing.",
     },
     {
       year: "The early years",
+      icon: "moon",
       title: "Long nights, tight deadlines.",
       text: "The first years were a test: late nights, tight deadlines, and clients who didn't yet know the name. Every hurdle taught a lesson, and quality slowly became the reputation.",
     },
     {
       year: "Growing",
+      icon: "users",
       title: "One became ten. Ten became a team.",
       text: "One happy client told another. One became ten, and ten became a team. A partner with 9+ years in tech joined and brought the depth and discipline that turn good ideas into reliable products.",
     },
     {
       year: "Today",
+      icon: "globe",
       title: "50+ people. 500+ projects.",
       text: "Today 50+ people build with us. Together we've delivered 500+ projects for founders, startups and established brands across Pakistan, the UAE, the US and the UK.",
     },
@@ -235,21 +239,31 @@ export const story = {
 };
 
 // ---------------------------------------------------------------
-//  Founders — set `name` to show it above the role.
+//  Founders — told as a story, no photos. Set `name` to show it.
 // ---------------------------------------------------------------
 export const founders = [
   {
     name: "",
     role: "Founder & Creative Director",
-    photo: "/team/founder.jpeg",
-    bio: "Started Sarté alone in 2019 and wore every hat: designer, editor, developer and marketer. Turned long nights and one happy client into a 50+ person team trusted across four countries.",
+    initial: "F",
+    quote:
+      "In 2019, I started alone: one laptop, one idea, and no safety net. I was the designer, editor, developer, and marketer all at once.",
+    story: [
+      "The early years tested everything: long nights, tight deadlines, and clients who didn't yet know the name. But every hurdle taught something, and quality became the reputation.",
+      "One happy client became ten, and ten became a team. Today 50+ people work together under Sarté, with 500+ projects delivered for founders, startups and established brands.",
+    ],
     tags: ["Since 2019", "Brand & Design", "500+ projects"],
   },
   {
     name: "",
     role: "Co-founder & Technical Partner",
-    photo: "/team/partner.jpeg",
-    bio: "9+ years in the tech industry. Brings the depth and discipline that turn good ideas into reliable products, solves the problems others avoid, and keeps every client confident from the first call to final delivery.",
+    initial: "P",
+    quote:
+      "With more than 9 years in the tech industry, he brings the depth and discipline that turn good ideas into reliable products.",
+    story: [
+      "His technical expertise solves the problems others avoid, and his clear, honest communication keeps every client confident from the first call to final delivery.",
+      "That combination of strong skills and strong relationships has taken Sarté far beyond where either founder started, and it's the reason clients trust us with their biggest projects.",
+    ],
     tags: ["9+ years in tech", "Engineering", "Client trust"],
   },
 ];

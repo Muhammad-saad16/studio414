@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTrans
 import { ArrowDownRight, ArrowUpRight, Sparkles } from "lucide-react";
 import { Button, ease } from "./ui";
 
-const words = ["ideas", "brands", "stories", "products", "growth"];
+const words = ["ideas", "brands", "stories", "growth"];
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -66,7 +66,7 @@ export default function Hero() {
           Now booking projects for 2027
         </motion.div>
 
-        <h1 className="font-display text-[13vw] leading-[0.92] font-bold tracking-tight md:text-[8.5vw] xl:text-[8rem]">
+        <h1 className="font-display text-[11.5vw] leading-[0.95] font-bold tracking-tight sm:text-[10vw] md:text-[8vw] xl:text-[7.5rem]">
           {["We craft", "bold"].map((line, li) => (
             <span key={li} className="block overflow-hidden">
               <motion.span
@@ -78,7 +78,7 @@ export default function Hero() {
                 {line}
               </motion.span>
               {li === 1 && (
-                <span className="relative ml-[0.25em] inline-flex h-[1.05em] overflow-hidden align-bottom">
+                <span className="relative ml-[0.25em] inline-flex h-[1.15em] overflow-hidden pr-[0.15em] align-bottom">
                   <AnimatePresence mode="popLayout">
                     <motion.span
                       key={words[i]}
